@@ -12,6 +12,16 @@ html {
     avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto,
     noto, arial, sans-serif;
 
+  --font-thin: 100;
+  --font-extra-light: 200;
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semi-bold: 600;
+  --font-bold: 700;
+  --font-extra-bold: 800;
+  --font-black: 900;
+
   --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
   --ease-in: cubic-bezier(0.75, 0, 1, 1);
   --ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -113,12 +123,169 @@ h6 {
 }
 
 /*
- * BASE
+ * ELEMENTS
  */
 
 /*
- * UTILITIES
+ * OBJECTS
  */
+
+.Container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/*
+* COMPONENTS
+*/
+
+.FormContainer {
+  flex: 1;
+
+  max-width: calc(456 / 16 * 1rem);
+  /* margin-top: calc(32 / 16 * 1rem); */
+  letter-spacing: -1px;
+  isolation: isolate;
+}
+
+.FormContainer > .h1 {
+  margin-bottom: 16px;
+}
+
+.FormRow {
+  position: relative;
+}
+
+.FormInput,
+.Button[type="submit"] {
+  flex: 1;
+}
+
+.GridFlow {
+  display: grid;
+  gap: 50px;
+}
+
+.InputWrapper {
+  --padding-vertical: 14px;
+  --padding-horizontal: 20px;
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 2px solid hsl(var(--color-light-gray));
+  border-radius: 4px;
+}
+
+.InputWrapper:hover,
+.InputWrapper:focus-within {
+  outline: none;
+  border-color: hsl(var(--color-primary));
+}
+
+.FormInput,
+.FormLabel {
+  font-size: 24px;
+  line-height: 1;
+  font-weight: var(--font-medium);
+}
+
+.FormLabel {
+  position: absolute;
+  top: calc(var(--padding-vertical) + 4px);
+  left: var(--padding-horizontal);
+
+  display: block;
+  background: hsl(var(--color-white));
+  color: hsl(var(--color-primary));
+
+  pointer-events: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  z-index: 1;
+
+  transform: scale(1);
+  transform-origin: left top;
+  transition: transform 200ms var(--ease-out);
+}
+
+.FormInput {
+  background: none transparent;
+  border: none;
+
+  padding: var(--padding-vertical) var(--padding-horizontal);
+}
+
+.FormInput:focus {
+  outline: none;
+}
+
+.FormInput:not(:placeholder-shown) + label,
+.FormInput:focus + label {
+  padding-left: 6px;
+  margin-left: -6px;
+  padding-right: 12px;
+  transform: translateY(-1.7rem) scale(0.6);
+}
+
+.FormInput#password:placeholder-shown ~ .ToggleButton,
+.FormInput#confirm-password:placeholder-shown ~ .ToggleButton {
+  display: none;
+}
+
+.EyeVisible,
+.EyeHidden {
+  position: absolute;
+  top: 0;
+  left: 0;
+  fill: hsl(var(--color-light-gray));
+  transition: all 200ms var(--ease);
+}
+
+.Notification {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  font-size: calc(12 / 16 * 1rem);
+  font-weight: var(--font-regular);
+  color: hsl(var(--color-dark-gray));
+  letter-spacing: -0.3px;
+  transform: translateY(calc(100% + 4px));
+}
+
+.Notification.mError {
+  color: hsl(var(--color-error));
+}
+
+.Notification.mSuccess {
+  color: hsl(var(--color-success));
+}
+
+/* Typography */
+
+.h1 {
+  font-size: calc(56 / 16 * 1rem);
+  font-weight: var(--font-extra-bold);
+  letter-spacing: -1px;
+}
+
+/* Icons */
+.Icon {
+  width: 32px;
+  height: 32px;
+}
+
+/* Buttons */
 
 .UnstyledButton {
   display: block;
@@ -138,4 +305,72 @@ h6 {
 
 .UnstyledButton:focus:not(:focus-visible) {
   outline: none;
+}
+
+.Button {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  font-size: calc(24 / 16 * 1rem);
+  font-weight: var(--font-bold);
+  line-height: 1;
+  background-color: hsl(var(--color-primary));
+  border-radius: 4px;
+  color: hsl(var(--color-white));
+  text-align: center;
+}
+
+.ToggleButton {
+  position: relative;
+  margin-left: 10px;
+  margin-right: 12px;
+  width: 32px;
+  height: 32px;
+}
+
+.ToggleButton::after {
+  --tap-increment: -8px;
+  content: " ";
+  position: absolute;
+  top: var(--tap-increment);
+  left: var(--tap-increment);
+  right: var(--tap-increment);
+  bottom: var(--tap-increment);
+}
+
+.ToggleButton:hover > svg {
+  fill: hsl(var(--color-dark-gray));
+}
+
+/*
+ * UTILITIES
+ */
+
+.uMiddleCenter {
+  display: grid;
+  place-content: center;
+}
+
+.uCenter {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Text  */
+
+.uTextCenter {
+  text-align: center;
+}
+
+.uTextLeft {
+  text-align: left;
+}
+
+.uTextRight {
+  text-align: right;
+}
+
+/* Position */
+
+.uRelative {
+  position: relative;
 }
